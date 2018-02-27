@@ -3,6 +3,7 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import LoginContainer from './LoginContainer';
 import ChatContainer from './ChatContainer';
 import UserContainer from './UserContainer';
+import NotificationResource from '../resources/NotificationResource';
 import './app.css';
 
 class App extends Component {
@@ -21,6 +22,8 @@ class App extends Component {
   	firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
+        // this.listenForMessages();
+        this.notifications.changeUser(user)
       } else {
         this.props.history.push('/login');
       }
@@ -33,7 +36,22 @@ class App extends Component {
         this.setState({ messagesLoaded: true });
       }
     });
+
+    this.notifications = new NotificationResource(
+      firebase.messaging(),
+      firebase.database()
+    );
   }
+
+  // listenForMessages = () => {
+  //   firebase.database().ref('/messages')
+  //     .on('value', snapshot => {
+  //       this.onMessage(snapshot);
+  //       if (!this.state.messagesLoaded) {
+  //         this.setState({ messagesLoaded: true });
+  //       }
+  //     });
+  // };
 
   handleSubmitMessage = msg => {
     const data = {
@@ -50,7 +68,14 @@ class App extends Component {
     return(
       <div id="container" className="inner-container">
         <Switch>
-          <Route exact path="/" render={() => <ChatContainer onSubmit={this.handleSubmitMessage} user={this.state.user} messages={this.state.messages} messagesLoaded={this.state.messagesLoaded}/>} />
+          <Route exact path="/"
+            render={() => <ChatContainer 
+              onSubmit={this.handleSubmitMessage}
+              user={this.state.user}
+              messages={this.state.messages}
+              messagesLoaded={this.state.messagesLoaded}
+            />} 
+          />
           <Route exact path="/login" component={LoginContainer} />
           <Route
             path="/users/:id" 
