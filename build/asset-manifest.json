@@ -1,3 +1,6 @@
 {
-  "main.js": "bundle.js"
+  "main.js": "static/js/main.ff23fa29.js",
+  "static/js/0.ff23fa29.chunk.js": "static/js/0.ff23fa29.chunk.js",
+  "static/js/1.ff23fa29.chunk.js": "static/js/1.ff23fa29.chunk.js",
+  "static/js/2.ff23fa29.chunk.js": "static/js/2.ff23fa29.chunk.js"
 }

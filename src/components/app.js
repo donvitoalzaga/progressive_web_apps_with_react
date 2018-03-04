@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import LoginContainer from './LoginContainer';
-import ChatContainer from './ChatContainer';
-import UserContainer from './UserContainer';
+import AsyncComponent from './AsyncComponent';
 import NotificationResource from '../resources/NotificationResource';
 import './app.css';
 
@@ -41,6 +39,10 @@ class App extends Component {
       firebase.messaging(),
       firebase.database()
     );
+
+    loadChat();
+    loadLogin();
+    loadUser();
   }
 
   listenForBannerInstall = () => {
@@ -72,6 +74,10 @@ class App extends Component {
   };
 
   render() {
+    const LoginContainer = AsyncComponent(loadLogin);
+    const UserContainer = AsyncComponent(loadUser);
+    const ChatContainer = AsyncComponent(loadChat);
+
     return(
       <div id="container" className="inner-container">
         <Switch>
@@ -99,5 +105,17 @@ class App extends Component {
     );
   }
 }
+
+const loadLogin = () => {
+  return import('./LoginContainer').then(module => module.default);
+};
+
+const loadChat = () => {
+  return import('./ChatContainer').then(module => module.default);
+};
+
+const loadUser = () => {
+  return import('./UserContainer').then(module => module.default);
+};
 
 export default withRouter(App)

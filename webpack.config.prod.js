@@ -8,7 +8,8 @@ module.exports = {
 	],
 	output: {
 		path: __dirname + "/build",
-		filename: "bundle.js",
+		filename: 'static/js/[name].[hash:8].js',
+		chunkFilename: 'static/js/[name].[hash:8].chunk.js',
 		publicPath: "/",
   	},
   	module: {
@@ -18,7 +19,7 @@ module.exports = {
 		        exclude: /node_modules/,
 		        loader: 'babel-loader',
 		        query: {
-		          presets: ['es2015','react'],
+		          presets: ['es2015','react','stage-2'],
 		          plugins: ['react-hot-loader/babel', 'transform-class-properties']
 		        }
       		},
