@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import AsyncComponent from './AsyncComponent';
 import NotificationResource from '../resources/NotificationResource';
-import './app.css';
 
 class App extends Component {
   state = { user: null, messages: [], messagesLoaded: false };
